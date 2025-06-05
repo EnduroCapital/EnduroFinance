@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="nl-NL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enduro Finance - Your CFO Partner (Design based on Enduro Capital)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Font: Lato is used on endurocapital.nl, with fallbacks. Open Sans is a good alternative. -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Colors directly from or inspired by endurocapital.nl CSS
+                        'ec-blue-primary': '#004a8f',      // e.g., .header__logo, .button--primary bg
+                        'ec-blue-primary-hover': '#003b73',// Darker shade for hover
+                        'ec-gold-accent': '#fdb813',      // e.g., .button--primary text/accent color
+                        'ec-gold-accent-hover': '#e4a611',// Darker gold for hover
+                        'ec-text-dark': '#333333',        // General body text
+                        'ec-text-light': '#ffffff',       // Text on dark backgrounds
+                        'ec-text-gray': '#707070',        // Subtitles, less prominent text
+                        'ec-text-heading': '#262626',     // For some headings, slightly darker than body
+                        'ec-bg-light': '#f8f9fa',        // Common light grey background
+                        'ec-bg-white': '#ffffff',
+                        'ec-border-color': '#dee2e6',     // Standard border color
+                        'ec-footer-bg': '#262626',        // Footer background
+                        'ec-footer-text': '#cccccc',      // Footer text
+                        'ec-footer-link-hover': '#fdb813',// Footer link hover
+                    },
+                    fontFamily: {
+                        // endurocapital.nl uses 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif
+                        sans: ['Lato', 'Open Sans', 'sans-serif'],
+                    },
+                    fontSize: {
+                        'xs': '0.75rem',    // 12px
+                        'sm': '0.875rem',   // 14px (e.g., nav links, card text)
+                        'base': '1rem',     // 16px (default body text)
+                        'lg': '1.125rem',   // 18px (e.g., subtitles)
+                        'xl': '1.25rem',    // 20px (e.g., card titles)
+                        '2xl': '1.5rem',    // 24px
+                        '3xl': '1.875rem',  // 30px (e.g., section titles)
+                        '4xl': '2.5rem',    // 40px (e.g., hero titles)
+                        '5xl': '3rem',      // 48px
+                    },
+                    container: { // Not using Tailwind's container plugin directly to match endurocapital.nl structure
+                        center: false, // We'll use a custom .site-container
+                    },
+                    maxWidth: {
+                        'site': '1140px', // endurocapital.nl .container seems to be around this width
+                    },
+                    boxShadow: {
+                        'header': '0 2px 5px rgba(0,0,0,0.08)', // Subtle shadow for header
+                        'card': '0 5px 15px rgba(0,0,0,0.07)', // Default card shadow
+                        'card-hover': '0 8px 25px rgba(0,0,0,0.1)', // Card shadow on hover
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: theme('fontFamily.sans');
+            color: theme('colors.ec-text-dark');
+            background-color: theme('colors.ec-bg-white');
+            line-height: 1.65; /* Common readability baseline from sites like Enduro Capital */
+            font-weight: 400; /* Default font weight */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        /* Site container to mimic endurocapital.nl's .container */
+        .site-container {
+            max-width: theme('maxWidth.site');
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px; /* endurocapital.nl uses 15px padding for its .container */
+            padding-right: 15px;
+        }
+
+        /* Header styles based on endurocapital.nl */
+        .site-header {
+            background-color: theme('colors.ec-bg-white');
+            box-shadow: theme('boxShadow.header');
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* High z-index for sticky header */
+            padding: 0.75rem 0; /* Approx 12px top/bottom */
+        }
+        .site-header .header-inner-container { /* Using custom class for flex behavior */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: theme('maxWidth.site');
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+            height: 60px; /* Approximate height from endurocapital.nl */
+        }
+        .header-logo a {
+            font-size: 1.8rem; /* Approx 28-30px, adjust as needed */
+            font-weight: 900; /* Very bold like endurocapital.nl logo text */
+            color: theme('colors.ec-blue-primary');
+            text-decoration: none;
+            letter-spacing: -0.5px; /* Common for logos */
+        }
+        .main-navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .main-navigation ul li a {
+            padding: 0.5rem 0.9rem; /* Fine-tuned padding */
+            text-decoration: none;
+            color: theme('colors.ec-blue-primary');
+            font-weight: 700; /* Bold nav links */
+            font-size: theme('fontSize.sm'); /* Approx 14px */
+            text-transform: uppercase; /* As on endurocapital.nl */
+            transition: color 0.2s ease-in-out;
+            letter-spacing: 0.5px;
+        }
+        .main-navigation ul li a:hover,
+        .main-navigation ul li.current-menu-item a { /* For active state if implemented */
+            color: theme('colors.ec-gold-accent');
+        }
+        .header-cta a {
+            background-color: theme('colors.ec-gold-accent');
+            color: theme('colors.ec-text-dark');
+            padding: 0.6rem 1.2rem; /* Fine-tuned */
+            border-radius: 3px; /* Subtle rounding */
+            font-weight: 700;
+            font-size: theme('fontSize.sm');
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background-color 0.2s ease-in-out;
+            margin-left: 1rem; /* Space from nav */
+        }
+        .header-cta a:hover {
+            background-color: theme('colors.ec-gold-accent-hover');
+        }
+        .mobile-menu-toggle {
+            color: theme('colors.ec-blue-primary');
+            font-size: 1.6rem; /* Slightly larger */
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        #mobile-nav {
+            border-top: 1px solid theme('colors.ec-border-color');
+        }
+        #mobile-nav ul li a {
+            color: theme('colors.ec-blue-primary');
+            font-weight: 700;
+            font-size: theme('fontSize.base');
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid theme('colors.ec-border-color');
+            text-transform: uppercase;
+            display: block;
+            text-align: center;
+        }
+         #mobile-nav ul li a:hover {
+            background-color: theme('colors.ec-bg-light');
+            color: theme('colors.ec-gold-accent');
+        }
+        #mobile-nav .header-cta-mobile a {
+             margin: 1rem auto; display: block; width: fit-content;
+        }
+
+
+        /* Hero Section Styles */
+        .hero-section {
+            background-color: theme('colors.ec-blue-primary');
+             /* Placeholder for actual hero image from endurocapital.nl */
+            background-image: linear-gradient(rgba(0, 74, 143, 0.85), rgba(0, 74, 143, 0.85)), url('https://placehold.co/1920x650/002d50/ffffff?text=Professional+Financial+Background');
+            background-size: cover;
+            background-position: center center;
+            color: theme('colors.ec-text-light');
+            padding: 7rem 1rem; /* Generous padding */
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: theme('fontSize.4xl');
+            font-weight: 900; /* Extra bold for impact */
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .hero-section p.subtitle {
+            font-size: theme('fontSize.lg');
+            font-weight: 400; /* Lighter than title */
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+        .hero-buttons .btn {
+            margin: 0.5rem; /* Spacing for buttons */
+            padding: 0.8rem 1.8rem;
+            font-size: theme('fontSize.sm'); /* Slightly smaller than base for buttons */
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .hero-buttons .btn-primary {
+            background-color: theme('colors.ec-gold-accent');
+            color: theme('colors.ec-text-dark');
+            border: 2px solid theme('colors.ec-gold-accent');
+        }
+        .hero-buttons .btn-primary:hover {
+            background-color: theme('colors.ec-gold-accent-hover');
+            border-color: theme('colors.ec-gold-accent-hover');
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .hero-buttons .btn-secondary {
+            background-color: transparent;
+            border: 2px solid theme('colors.ec-text-light');
+            color: theme('colors.ec-text-light');
+        }
+        .hero-buttons .btn-secondary:hover {
+            background-color: theme('colors.ec-text-light');
+            color: theme('colors.ec-blue-primary');
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* General Section Styling */
+        .content-section {
+            padding: 5rem 0; /* endurocapital.nl has significant vertical spacing */
+        }
+        .content-section.bg-light {
+            background-color: theme('colors.ec-bg-light');
+        }
+        .section-title {
+            font-size: theme('fontSize.3xl');
+            font-weight: 900; /* Bold section titles */
+            color: theme('colors.ec-text-heading'); /* Darker heading color */
+            text-align: center;
+            margin-bottom: 1.5rem; /* Space after title */
+        }
+        .section-subtitle {
+            font-size: theme('fontSize.lg');
+            color: theme('colors.ec-text-gray');
+            text-align: center;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3.5rem; /* More space after subtitle */
+            line-height: 1.7;
+        }
+
+        /* Card Styles (emulating .card--focus on endurocapital.nl) */
+        .expertise-card {
+            background-color: theme('colors.ec-bg-white');
+            border: 1px solid theme('colors.ec-border-color');
+            border-radius: 4px;
+            padding: 2.5rem; /* More padding */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: theme('boxShadow.card');
+            height: 100%; /* For equal height cards in a grid row */
+            display: flex;
+            flex-direction: column;
+        }
+        .expertise-card:hover {
+            transform: translateY(-6px);
+            box-shadow: theme('boxShadow.card-hover');
+        }
+        .expertise-card .card-icon {
+            font-size: 3rem; /* Larger icons */
+            color: theme('colors.ec-blue-primary');
+            margin-bottom: 1.5rem;
+        }
+        .expertise-card .card-title {
+            font-size: theme('fontSize.xl');
+            font-weight: 700;
+            color: theme('colors.ec-blue-primary'); /* Titles in primary blue */
+            margin-bottom: 1rem;
+        }
+        .expertise-card .card-text {
+            font-size: theme('fontSize.sm');
+            color: theme('colors.ec-text-gray');
+            line-height: 1.7;
+            flex-grow: 1; /* Allow text to take space for alignment */
+        }
+        
+        /* List item styling (e.g. for benefits) */
+        .styled-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem; /* Increased spacing */
+            font-size: theme('fontSize.base');
+            color: theme('colors.ec-text-gray');
+            line-height: 1.7;
+        }
+        .styled-list li i.fa-check-circle { /* Specific icon class */
+            color: theme('colors.ec-blue-primary'); /* Or ec-gold-accent */
+            margin-right: 0.8rem;
+            margin-top: 0.2rem; /* Fine-tune vertical alignment */
+            font-size: 1.1em; /* Slightly larger check icon */
+        }
+
+        /* About/Team Section Image */
+        .profile-image {
+            border-radius: 50%;
+            border: 6px solid theme('colors.ec-blue-primary'); /* Thicker border */
+            max-width: 220px; /* Larger profile image */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        /* Form Styling */
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem; /* Slightly more padding */
+            border: 1px solid theme('colors.ec-border-color');
+            border-radius: 3px;
+            font-size: theme('fontSize.base');
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            color: theme('colors.ec-text-dark');
+        }
+        .form-input::placeholder {
+            color: #aaa;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: theme('colors.ec-blue-primary');
+            box-shadow: 0 0 0 3px rgba(0, 74, 143, 0.15);
+        }
+        .form-button { /* Applied to newsletter submit */
+            background-color: theme('colors.ec-gold-accent');
+            color: theme('colors.ec-text-dark'); /* Ensure contrast */
+            padding: 0.8rem 1.5rem;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: theme('fontSize.base');
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+        .form-button:hover {
+            background-color: theme('colors.ec-gold-accent-hover');
+            transform: translateY(-1px);
+        }
+        .form-message { height: 1.25rem; /* Reserve space to prevent layout shift */ }
+        .form-message.success { color: theme('colors.ec-gold-accent'); font-weight: bold; }
+        .form-message.error { color: #d9534f; /* A common error red */ font-weight: bold; }
+
+
+        /* Footer styles based on endurocapital.nl */
+        .site-footer {
+            background-color: theme('colors.ec-footer-bg');
+            color: theme('colors.ec-footer-text');
+            padding: 4rem 0; /* More padding */
+            font-size: theme('fontSize.sm');
+            line-height: 1.8;
+        }
+        .site-footer a {
+            color: theme('colors.ec-footer-text');
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+        .site-footer a:hover {
+            color: theme('colors.ec-footer-link-hover');
+        }
+        .footer-logo a {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: theme('colors.ec-text-light'); /* Brighter for logo */
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .footer-social-links a {
+            margin: 0 0.6rem;
+            font-size: 1.5rem; /* Larger social icons */
+        }
+        .footer-copyright {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #444; /* Subtle separator */
+            font-size: theme('fontSize.xs');
+            color: #999;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner-container">
+            <div class="header-logo">
+                <a href="#">Enduro Finance</a>
+            </div>
+            <nav class="main-navigation hidden md:flex">
+                <ul>
+                    <li><a href="#expertise">Onze Expertise</a></li>
+                    <li><a href="#waarom-cfo">Waarom CFO</a></li>
+                    <li><a href="#wanneer-cfo">Timing</a></li>
+                    <li><a href="#over-martijn">Over Martijn</a></li>
+                </ul>
+            </nav>
+            <div class="header-cta hidden md:block">
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Navigation (hidden by default) -->
+        <div id="mobile-nav" class="hidden md:hidden bg-ec-bg-white shadow-lg absolute w-full">
+            <ul class="flex flex-col"> {/* Removed items-center to allow full width text */}
+                 <li><a href="#expertise">Onze Expertise</a></li>
+                 <li><a href="#waarom-cfo">Waarom CFO</a></li>
+                 <li><a href="#wanneer-cfo">Timing</a></li>
+                 <li><a href="#over-martijn">Over Martijn</a></li>
+                 <li class="header-cta-mobile"><a href="#contact" class="header-cta">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="site-container">
+            <h1>Enduro Finance - Your CFO Partner</h1>
+            <p class="subtitle">Flexibele CFO-diensten voor Startups, Scaleups en MKB. Een sterke financiële basis is essentieel voor duurzame groei. Wij zorgen voor een financieel beleid dat aansluit bij jouw ambities.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Neem contact op</a>
+                <a href="#expertise" class="btn btn-secondary">Ontdek onze diensten</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="content-section bg-light">
+        <div class="site-container">
+            <h2 class="section-title">Onze Expertise</h2>
+            <p class="section-subtitle">Versnel met visie. Krijg financiële inzichten die je bedrijf helpen groeien met praktische en strategische oplossingen.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="expertise-card">
+                    <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3 class="card-title">Financial Modeling</h3>
+                    <p class="card-text">Zet koers naar winstgevendheid op maat gemaakte financiële modellen en verkrijg waardevolle inzichten.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="card-icon"><i class="fas fa-wallet"></i></div>
+                    <h3 class="card-title">Cashflow Management</h3>
+                    <p class="card-text">Optimaliseer de financiële gezondheid van je onderneming met sterk cashflowmanagement.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="card-icon"><i class="fas fa-users-cog"></i></div> {/* Changed icon for variation */}
+                    <h3 class="card-title">Fundraising / M&A</h3>
+                    <p class="card-text">Stimuleer groei met doeltreffende financieringsstrategieën en een breed netwerk van investeerders.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="card-icon"><i class="fas fa-file-contract"></i></div> {/* Changed icon */}
+                    <h3 class="card-title">Financial Reporting</h3>
+                    <p class="card-text">Stel duidelijke doelen en volg ze met precisie voor meetbare resultaten.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12 md:mt-16">
+                 <h3 class="text-xl font-semibold text-ec-text-heading mb-6">Kerncompetenties omvatten ook:</h3>
+                <ul class="styled-list inline-grid md:grid-cols-2 gap-x-8 gap-y-3 max-w-xl mx-auto text-left">
+                    <li><i class="fas fa-check-circle"></i> Strategieën voor financiële groei</li>
+                    <li><i class="fas fa-check-circle"></i> Duidelijk cashflowbeheer</li>
+                    <li><i class="fas fa-check-circle"></i> Partner in kapitaal en groei</li>
+                    <li><i class="fas fa-check-circle"></i> Naadloze werkprocessen</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waarom een flexibele CFO? Section -->
+    <section id="waarom-cfo" class="content-section">
+        <div class="site-container">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                <div class="text-center md:text-left">
+                    <img src="https://placehold.co/540x400/004a8f/ffffff?text=Strategisch+Inzicht" alt="Strategisch Inzicht & Partnerschap" class="rounded-md shadow-lg w-full">
+                </div>
+                <div>
+                    <h2 class="section-title !text-left !mb-4">Overbrug de Financiële Kloof</h2>
+                    <h3 class="text-2xl font-bold text-ec-text-heading mb-4">Waarom een flexibele CFO?</h3>
+                    <p class="text-ec-text-gray mb-4 leading-relaxed">Voor bedrijven waar de financiële complexiteit de standaard boekhouding overstijgt, bieden flexibele CFO-diensten een strategische oplossing. Wij overbruggen de kloof tussen basisboekhouding en diepgaande financiële strategieën...</p>
+                    <p class="text-ec-text-gray mb-6 leading-relaxed">Met onze hulp legt u een stevige financiële basis, klaar voor de volgende stap, terwijl u profiteert van:</p>
+                    <ul class="styled-list">
+                        <li><i class="fas fa-check-circle"></i> Strategisch financieel inzicht dat verder gaat dan dagelijkse boekhouding.</li>
+                        <li><i class="fas fa-check-circle"></i> Efficiënte rapportage en toezicht zonder de kosten van een fulltime CFO.</li>
+                        <li><i class="fas fa-check-circle"></i> Op maat gemaakte financiële modellen die groei en investeringsbereidheid ondersteunen.</li>
+                        <li><i class="fas fa-check-circle"></i> Voorbereiding op fundraising met essentiële inzichten en connecties.</li>
+                        <li><i class="fas fa-check-circle"></i> Flexibele diensten die meegroeien met je bedrijf en je voorbereiden op elke nieuwe fase.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wanneer is het juiste moment? Section -->
+    <section id="wanneer-cfo" class="content-section bg-light">
+        <div class="site-container">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                <div class="order-last md:order-first">
+                    <h2 class="section-title !text-left !mb-4">Zorg voor een stabiele basis</h2>
+                    <h3 class="text-2xl font-bold text-ec-text-heading mb-4">Wanneer is het juiste moment voor CFO services?</h3>
+                    <p class="text-ec-text-gray mb-4 leading-relaxed">Het juiste moment om een flexibele CFO in te schakelen is wanneer uw financiële structuur niet langer voldoet aan de groeiende behoeften van uw bedrijf. Dit is vooral relevant als:</p>
+                     <ul class="styled-list">
+                        <li><i class="fas fa-check-circle"></i> Uw financiën een complexiteit bereiken die de dagelijkse boekhouding overstijgt.</li>
+                        <li><i class="fas fa-check-circle"></i> U behoefte heeft aan strategische financiële planning voor toekomstige groei.</li>
+                        <li><i class="fas fa-check-circle"></i> U zich voorbereidt om investeringen op te halen.</li>
+                        <li><i class="fas fa-check-circle"></i> Het identificeren en beheren van financiële risico’s essentieel wordt.</li>
+                        <li><i class="fas fa-check-circle"></i> Uw bedrijf snel groeit en behoefte heeft aan schaalbare financiële expertise.</li>
+                    </ul>
+                    <p class="text-ec-text-gray mt-6 leading-relaxed">De combinatie van deze momenten en behoeften maakt de rol van CFO services onmisbaar voor bedrijven die streven naar een duurzame groei en succes op de lange termijn.</p>
+                </div>
+                <div class="order-first md:order-last text-center md:text-left">
+                     <img src="https://placehold.co/540x400/707070/ffffff?text=Groei+en+Expertise" alt="Groei en Expertise" class="rounded-md shadow-lg w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Martijn Section -->
+    <section id="over-martijn" class="content-section">
+        <div class="site-container">
+            <h2 class="section-title">Maak Kennis Met Martijn de Blaey</h2>
+            <p class="section-subtitle">De drijvende kracht achter Enduro Finance.</p>
+            <div class="max-w-4xl mx-auto md:flex flex-row-reverse items-center gap-10 md:gap-16 text-left">
+                <div class="md:w-1/3 text-center mb-8 md:mb-0">
+                    <img src="https://placehold.co/220x220/004a8f/ffffff?text=MdB&font=Lato" alt="Martijn de Blaey" class="profile-image mx-auto">
+                </div>
+                <div class="md:w-2/3">
+                    <p class="text-ec-text-gray mb-4 leading-relaxed">Martijn de Blaey is een ondernemende finance- en investeringsprofessional met meer dan 8 jaar ervaring in veeleisende, snelle werkomgevingen. Hij is resultaatgericht, een creatieve probleemoplosser met een self-starter mentaliteit en sterke financiële vaardigheden, inclusief uitstekende analytische capaciteiten.</p>
+                    <p class="text-ec-text-gray mb-4 leading-relaxed">Bedreven in het bevorderen van groei en innovatie in dynamische, ondernemende settings, is Martijn erop gebrand zijn expertise in te zetten om bij te dragen aan en succes te stimuleren in een vooruitstrevende organisatie.</p>
+                    <p class="text-ec-text-gray leading-relaxed">Met Enduro Finance brengt Martijn zijn uitgebreide ervaring rechtstreeks naar startups, scale-ups en MKB-bedrijven, en biedt hij de strategische financiële begeleiding die nodig is om ambities waar te maken.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter/Contact Section -->
+    <section id="contact" class="content-section bg-ec-blue-primary">
+        <div class="site-container text-center">
+            <h2 class="section-title !text-ec-text-light">Blijf op de hoogte</h2>
+            <p class="section-subtitle !text-gray-200 !max-w-xl">Stimuleer dynamische groei met strategisch financieel leiderschap. Schrijf je in en ontvang content direct in je inbox.</p>
+            <form id="newsletterForm" class="max-w-lg mx-auto">
+                <div class="flex flex-col sm:flex-row gap-3 mb-3">
+                    <label for="emailInput" class="sr-only">E-mailadres</label>
+                    <input type="email" id="emailInput" placeholder="Jouw e-mailadres" class="form-input flex-grow" required>
+                    <button type="submit" class="form-button sm:w-auto w-full">Inschrijven</button>
+                </div>
+                <div id="formMessage" class="mt-3 text-sm form-message"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="site-container text-center">
+            <div class="footer-logo">
+                <a href="#">Enduro Finance</a>
+            </div>
+            <p class="mb-1">&copy; <span id="currentYear"></span> Enduro Finance. Alle rechten voorbehouden.</p>
+            <p class="mb-4 text-gray-400 text-xs">Your CFO Partner voor duurzame groei.</p>
+            <div class="footer-social-links">
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+            <div class="footer-copyright">
+                Ontwerp geïnspireerd door Enduro Capital
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-toggle');
+        const mobileNav = document.getElementById('mobile-nav');
+        const menuIcon = mobileMenuButton.querySelector('i');
+
+        if (mobileMenuButton && mobileNav && menuIcon) {
+            mobileMenuButton.addEventListener('click', () => {
+                const isHidden = mobileNav.classList.toggle('hidden');
+                if (isHidden) {
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                    mobileMenuButton.setAttribute('aria-expanded', 'true');
+                }
+            });
+             // Close mobile menu when a link is clicked
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.add('hidden');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+        // Set current year in footer
+        const currentYearSpan = document.getElementById('currentYear');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+        
+        // Newsletter form submission
+        const newsletterForm = document.getElementById('newsletterForm');
+        const emailInput = document.getElementById('emailInput');
+        const formMessage = document.getElementById('formMessage');
+
+        if (newsletterForm && emailInput && formMessage) {
+            newsletterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const email = emailInput.value.trim();
+                formMessage.textContent = ''; 
+                formMessage.className = 'mt-3 text-sm form-message'; // Reset class
+
+                if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { 
+                    formMessage.textContent = 'Bedankt voor uw inschrijving!';
+                    formMessage.classList.add('success');
+                    emailInput.value = ''; 
+                } else {
+                    formMessage.textContent = 'Voer alstublieft een geldig e-mailadres in.';
+                    formMessage.classList.add('error');
+                }
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                    formMessage.className = 'mt-3 text-sm form-message';
+                }, 4000);
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                // Ensure it's a valid internal link before preventing default
+                if (href.startsWith('#') && href.length > 1) {
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        e.preventDefault();
+                        const headerOffset = document.querySelector('header.site-header').offsetHeight || 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
