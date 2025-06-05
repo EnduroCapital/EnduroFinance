@@ -154,35 +154,57 @@
         }
         #mobile-nav {
             border-top: 1px solid theme('colors.ec-border-color');
+            background-color: theme('colors.ec-bg-white');
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform-origin: top;
+            transition: transform 0.3s ease-in-out;
+        }
+        #mobile-nav.hidden {
+            transform: scaleY(0);
+        }
+        #mobile-nav:not(.hidden) {
+            transform: scaleY(1);
         }
         #mobile-nav ul li a {
             color: theme('colors.ec-blue-primary');
             font-weight: 700;
             font-size: theme('fontSize.base');
-            padding: 0.8rem 1rem;
+            padding: 1rem;
             border-bottom: 1px solid theme('colors.ec-border-color');
             text-transform: uppercase;
             display: block;
             text-align: center;
+            transition: all 0.2s ease;
         }
-         #mobile-nav ul li a:hover {
+        #mobile-nav ul li a:hover {
             background-color: theme('colors.ec-bg-light');
             color: theme('colors.ec-gold-accent');
+            padding-left: 1.5rem;
         }
         #mobile-nav .header-cta-mobile a {
-             margin: 1rem auto; display: block; width: fit-content;
+            margin: 1rem auto;
+            display: block;
+            width: fit-content;
+            background-color: theme('colors.ec-gold-accent');
+            color: theme('colors.ec-text-dark');
+            padding: 0.8rem 1.5rem;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+        #mobile-nav .header-cta-mobile a:hover {
+            background-color: theme('colors.ec-gold-accent-hover');
+            transform: translateY(-2px);
         }
 
 
         /* Hero Section Styles */
         .hero-section {
             background-color: theme('colors.ec-blue-primary');
-             /* Placeholder for actual hero image from endurocapital.nl */
-            background-image: linear-gradient(rgba(0, 74, 143, 0.85), rgba(0, 74, 143, 0.85)), url('https://placehold.co/1920x650/002d50/ffffff?text=Professional+Financial+Background');
+            background-image: linear-gradient(rgba(0, 74, 143, 0.92), rgba(0, 74, 143, 0.92)), url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center center;
             color: theme('colors.ec-text-light');
-            padding: 7rem 1rem; /* Generous padding */
+            padding: 7rem 1rem;
             text-align: center;
         }
         .hero-section h1 {
@@ -266,22 +288,29 @@
             background-color: theme('colors.ec-bg-white');
             border: 1px solid theme('colors.ec-border-color');
             border-radius: 4px;
-            padding: 2.5rem; /* More padding */
+            padding: 2.5rem;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: theme('boxShadow.card');
-            height: 100%; /* For equal height cards in a grid row */
+            height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
         .expertise-card:hover {
             transform: translateY(-6px);
             box-shadow: theme('boxShadow.card-hover');
         }
+        .expertise-card:hover .card-icon {
+            transform: scale(1.1);
+            color: theme('colors.ec-gold-accent');
+        }
         .expertise-card .card-icon {
-            font-size: 3rem; /* Larger icons */
+            font-size: 3rem;
             color: theme('colors.ec-blue-primary');
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
         }
         .expertise-card .card-title {
             font-size: theme('fontSize.xl');
@@ -520,7 +549,7 @@
                         <li><i class="fas fa-check-circle"></i> Uw financiën een complexiteit bereiken die de dagelijkse boekhouding overstijgt.</li>
                         <li><i class="fas fa-check-circle"></i> U behoefte heeft aan strategische financiële planning voor toekomstige groei.</li>
                         <li><i class="fas fa-check-circle"></i> U zich voorbereidt om investeringen op te halen.</li>
-                        <li><i class="fas fa-check-circle"></i> Het identificeren en beheren van financiële risico’s essentieel wordt.</li>
+                        <li><i class="fas fa-check-circle"></i> Het identificeren en beheren van financiële risico's essentieel wordt.</li>
                         <li><i class="fas fa-check-circle"></i> Uw bedrijf snel groeit en behoefte heeft aan schaalbare financiële expertise.</li>
                     </ul>
                     <p class="text-ec-text-gray mt-6 leading-relaxed">De combinatie van deze momenten en behoeften maakt de rol van CFO services onmisbaar voor bedrijven die streven naar een duurzame groei en succes op de lange termijn.</p>
